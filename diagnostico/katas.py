@@ -8,53 +8,32 @@ manejo de errores, dataclasses y context managers. No requiere librerías extern
 
 from __future__ import annotations
 
-import re
-from collections import Counter
 from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass
-from functools import wraps
 
 
 # 1. Comprensiones -----------------------------------------------------------
 def palabras_por_longitud(texto: str) -> dict[int, list[str]]:
     """Agrupa palabras únicas (minúsculas, sin puntuación) por longitud, ordenadas."""
-    palabras_compl = set(re.findall(r"\w+", texto.lower()))
-    long_palabra = sorted({len(p) for p in palabras_compl})
-    return {n: sorted(p for p in palabras_compl if len(p) == n) for n in long_palabra}
+    raise NotImplementedError
 
 
 # 2. Colecciones -------------------------------------------------------------
 def top_n(frecuencias: Iterable[str], n: int) -> list[tuple[str, int]]:
     """Los n elementos más frecuentes; empate → orden alfabético."""
-    conteo = Counter(frecuencias)
-    return sorted(conteo.items(), key=lambda par: (-par[1], par[0]))[:n]
+    raise NotImplementedError
 
 
 # 3. Funciones de orden superior / closures ----------------------------------
 def reintentar(veces: int) -> Callable[[Callable[..., object]], Callable[..., object]]:
     """Decorador: reintenta la función hasta `veces` si lanza excepción; luego la propaga."""
-
-    def decorador(func: Callable[..., object]) -> Callable[..., object]:
-        @wraps(func)
-        def envoltura(*args: object, **kwargs: object) -> object:
-            for intento in range(1, veces + 1):
-                try:
-                    return func(*args, **kwargs)
-                except Exception:
-                    if intento == veces:
-                        raise
-            return None
+    raise NotImplementedError
 
 
 # 4. Generadores -------------------------------------------------------------
 def en_lotes[T](items: Iterable[T], tamano: int) -> Iterator[list[T]]:
     """Entrega listas de `tamano` elementos (la última puede ser menor). Perezoso."""
-    lote: list[T] = []
-    for item in items:
-        lote.append(item)
-        if len(lote) == tamano:
-            yield lote
-            lote = []
+    raise NotImplementedError
 
 
 # 5. Dataclasses + propiedades -----------------------------------------------
