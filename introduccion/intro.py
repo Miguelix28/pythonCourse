@@ -19,77 +19,59 @@ from dataclasses import dataclass
 
 # 1. Un programa es un archivo ----------------------------------------------------------
 def saludo(nombre: str, formal: bool = False) -> str:
-    """Saludo para `nombre`, sin los espacios que traiga a los lados.
-
-    saludo("Ana") → "Hola, Ana"        saludo("Ana", formal=True) → "Buenos días, Ana."
-    Pista: f-strings y el método strip.
-    """
-    raise NotImplementedError
+    nombre = nombre.strip()
+    if formal:
+        return f"Buenos días, {nombre}."
+    return f"Hola, {nombre}"
 
 
 def main() -> None:
-    """Imprime saludo("mundo"). Al final del archivo ya está el bloque
-    `if __name__ == "__main__":` que la llama: pruebe `uv run python introduccion/intro.py`.
-    """
-    raise NotImplementedError
+    print(saludo("mundo"))
 
 
 # 2. Bloques y condiciones --------------------------------------------------------------
 def clasificar_temperatura(t: float) -> str:
-    """Clasifica la temperatura de un modelo de IA.
-
-    Menor que 0.3 → "precisa"; de 0.3 a 1 (incluido) → "equilibrada"; mayor que 1 → "creativa".
-    Si es negativa o mayor que 2: ValueError.
-    """
-    raise NotImplementedError
+    if t < 0 or t > 2:
+        raise ValueError("La temperatura debe estar entre 0 y 2")
+    if t < 0.3:
+        return "precisa"
+    if t <= 1:
+        return "equilibrada"
+    return "creativa"
 
 
 # 3. Recorrer y contar ------------------------------------------------------------------
 def contar_vocales(texto: str) -> dict[str, int]:
-    """Cuántas veces aparece cada vocal (a, e, i, o, u), sin importar mayúsculas.
-
-    Siempre devuelve las cinco claves, aunque alguna valga 0. El texto viene sin tildes.
-    contar_vocales("Hola Mundo") → {"a": 1, "e": 0, "i": 0, "o": 2, "u": 1}
-    """
-    raise NotImplementedError
+    minusculas = texto.lower()
+    return {vocal: minusculas.count(vocal) for vocal in "aeiou"}
 
 
 # 4. Funciones que devuelven varios valores ---------------------------------------------
 def resumen(numeros: list[float]) -> tuple[float, float, float]:
-    """(mínimo, máximo, promedio) de la lista. Lista vacía: ValueError.
-
-    resumen([4, 1, 7]) → (1, 7, 4.0)
-    """
-    raise NotImplementedError
+    if not numeros:
+        raise ValueError("La lista no puede estar vacía")
+    return (min(numeros), max(numeros), sum(numeros) / len(numeros))
 
 
 # 5. Al llamar, se pasa el objeto -------------------------------------------------------
 def agregar_etiqueta(etiquetas: list[str] | None, nueva: str) -> list[str]:
-    """Una lista con las etiquetas y `nueva` al final, si no estaba ya.
-
-    No modifica la lista que recibe: devuelve otra. Con None, empieza de una lista vacía.
-    agregar_etiqueta(["rrhh"], "legal") → ["rrhh", "legal"]
-    """
-    raise NotImplementedError
+    resultado = list(etiquetas) if etiquetas is not None else []
+    if nueva not in resultado:
+        resultado.append(nueva)
+    return resultado
 
 
 # 6. Comprensiones ----------------------------------------------------------------------
 def largos(palabras: list[str]) -> dict[str, int]:
-    """Diccionario palabra → largo, sin las palabras vacías o de solo espacios.
-
-    Con una comprensión de diccionario. largos(["sol", "", "luna"]) → {"sol": 3, "luna": 4}
-    """
-    raise NotImplementedError
+    return {p: len(p) for p in palabras if p.strip()}
 
 
 # 7. Errores ----------------------------------------------------------------------------
 def a_entero(texto: str, defecto: int = 0) -> int:
-    """El entero que representa el texto, o `defecto` si no es un entero válido.
-
-    a_entero(" 7 ") → 7     a_entero("4.2") → 0     a_entero("x", defecto=-1) → -1
-    Pista: try / except ValueError.
-    """
-    raise NotImplementedError
+    try:
+        return int(texto)
+    except ValueError:
+        return defecto
 
 
 # 8. Módulos de la biblioteca estándar --------------------------------------------------
